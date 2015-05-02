@@ -1,0 +1,115 @@
+.smallButton
+{
+	font-size: 10px;
+}
+.center 
+{
+    margin-left:auto; 
+    margin-right:auto;
+}
+#graphButtonGroup
+{
+	font-size: 9px;
+	text-align: center;
+}
+
+#newPuff
+{
+    width: 17em;
+    height: 17em;
+    margin: 0 auto;
+    word-wrap: break-word !important;
+    white-space: normal !important;
+    background:#9ecf5e;
+    font-size:80%;
+    border-radius: 50%;
+    z-index: 0
+}
+.ui-select-medicine
+{
+	display: inline-table;
+	width: calc(100% - 80px)
+}
+.medicineLabel
+{
+	width: 170px !important;
+	display:inline !important;
+}
+.ui-select-numberPuffs
+{
+	display: inline-table;
+	width: calc(100% - 175px)
+}
+.numberPuffsLabel
+{
+	width: 170px !important;
+	display:inline !important;
+}
+.dateTimeLabel
+{
+	width: 80px !important;
+	display:inline !important;
+}
+#dateSelect div
+{
+	display: inline-table !important;
+	width:calc(50% - 86px) !important;
+}
+.main
+{
+	margin-right: 2%;
+	margin-left:3%;
+}
+.intro
+{
+	position: fixed !important;
+	height: 80% !important;
+	width: auto !important;
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;    
+    -webkit-transform: translate(-50%, -50%) !important;
+    -moz-transform: translate(-50%, -50%) !important;
+    -ms-transform: translate(-75%, -50%) !important;
+    z-index: 2 !important;
+   }
+.opacity
+{
+	opacity:.62;
+	position: fixed;
+	z-index:2 !important;
+	background-color: black !important;
+	width: 100% !important;
+	height:120% !important;
+}
+.next
+{
+	background: #9ecf5e !important;
+	display: inline !important;
+	z-index:2 !important;
+	color: white !important;
+    border-radius: 4px !important;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2)!important;
+    width: 30%!important;
+    height: 5%;
+    position: absolute;
+	right: 10%;
+	bottom: 7.5%;
+}
+#puffTable
+{
+	font-size: 9px
+}
+.deleteObjectButton
+{
+	width:23.5px;
+	height: 23.5px;
+}
+* :not .intro, .next
+{
+	z-index: 0;
+}
+div[data-role="header"],div[data-role="footer"]
+{
+	z-index:1;
+}

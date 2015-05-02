@@ -1,0 +1,147 @@
+<!--Shaunak Kale 2015-->
+
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="cordova.js"></script>
+        <script src="js/jquery/jquery-2.1.3.min.js"></script>
+        <script src="js/jquery/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" src="js/plugins/fastclick.js"></script>
+        <script src="js/plugins/parse.js"></script>
+        <script type="text/javascript" src="js/other/serverSide.js"></script>
+        <script src="js/plugins/flot.js"></script>
+        <script src="js/plugins/flotTime.js"></script>
+        <script type="text/javascript" src="js/plugins/dateBox.min.js"></script>
+        <script type="text/javascript" src="js/plugins/jquery.toastmessage.js"></script>
+        <script src="js/plugins/moment.min.js"></script>
+        <script src="js/historyPage/sortTable.js"></script>
+        <script src="js/other/timer.js"></script>
+        <script type="text/javascript" src="js/other/cordovaDeviceListeners.js"></script>
+        <script type="text/javascript" src="js/other/message.js"></script>
+        <script type="text/javascript" src="js/other/dateToday.js"></script>
+        <script type="text/javascript" src="js/homePage/medicineSelect.js"></script>
+        <script type="text/javascript" src="js/homePage/medicineSelect.js"></script>
+        <script type="text/javascript" src="js/other/email.js"></script>
+        <script type="text/javascript" src="js/homePage/puffArray.js"></script>
+        <script type="text/javascript" src="js/other/tours.js"></script>
+        <script type="text/javascript" src="js/other/deletePuff.js"></script>
+        <script type="text/javascript" src="js/other/makeTable.js"></script>
+        <script type="text/javascript" src="js/other/firstTime.js"></script>
+        <script src="js/asthmaControlApp.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/dateBox.min.css"> 
+        <link rel="stylesheet" type="text/css" href="css/jquery.toastmessage.css">     
+        <link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+        <link rel="stylesheet" href="css/AsthmaControlAppTheme.min.css" /> 
+        <link rel="stylesheet" type="text/css" href="css/pure-min.css">
+        <link rel="stylesheet" type="text/css" href="css/animate.css">
+        <link rel="stylesheet" type="text/css" href="css/asthmaControlApp.css">
+        
+    </head>
+    <body id="body">
+        <div class="opacity opacityDiv">
+        </div>
+        <div data-role="page" id="homePage">
+            <div data-role="header" class="header" data-position="fixed">
+                <h1 id="headerText">Asthma Tick</h1>
+                    <a href="#homePage" class="ui-btn ui-icon-info ui-btn-icon-notext ui-corner-all" id="tourAgain"></a>
+                    <a href="#historyPage" data-icon="bullets" class="ui-btn-right" id="historyButton">History</a>
+            </div>
+            <br>
+            <div data-role="main" class="main home">
+                <!--tour begin-->
+                <button class="next pure-button">Next</button>
+                <img class="intro intro1" src="img/tour/intro1.png">
+                <img class="intro intro2" src="img/tour/intro2.png">
+                <img class="intro intro3" src="img/tour/intro3.png">
+                <img class="intro intro4" src="img/tour/intro4.png">
+                <img class="intro intro5" src="img/tour/intro5.png">
+                
+                <!--tour end-->
+                <br>
+                <br>
+                <button class="ui-btn" id="newPuff" type="button"></button>
+                <br>
+                <form>
+                    <label>Comments:</label>
+                    <textarea cols="40" rows="8" name="notes" id="notes"></textarea>
+                    <div id ="medicineSelect">
+                        <label class="medicineLabel">Medicine:</label>
+                        <div class="ui-select ui-select-medicine" id="typeOfMedcine">
+                            <select name="select-native-1" id="select-native-1">
+                                <option value="Advair">Advair</option>
+                                <option value="Albuterol">Albuterol</option>
+                                <option value="Asmanex Twisthaler">Asmanex Twisthaler</option>
+                                <option value="Dulera">Dulera</option>
+                                <option value="Flovent">Flovent</option>
+                                <option value="Pulmicort">Pulmicort</option>
+                                <option value="Qvar">Qvar</option>
+                                <option value="Singulair">Singulair</option>
+                                <option value="Slo-Bid(Theophylline)">Slo-Bid(Theophylline)</option>
+                                <option value="Symbicort">Symbicort</option>
+                                <option value="Xolair">Xolair</option>
+                                <option value="Xopenex">Xopenex</option>
+                                <!--<option value="Other">Other</option>-->
+                            </select>
+                        </div>
+                    </div>
+                    <div id="numberPuffsSelect">
+                        <label class="numberPuffsLabel">Puffs Taken At A Time:</label>
+                        <div class="ui-select ui-select-numberPuffs" id="puffsAtTime">
+                            <select name="select-native-2" id="select-native-2">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <form>
+                    <div id="dateSelect">
+                        <label class="dateTimeLabel">Date/Time:</label>
+                        <input id = "date" type="text" data-role="datebox" data-options='{"mode":"flipbox"}'>
+                        <input id = "time" type="text" data-role="datebox" data-options='{"mode":"timeflipbox"}'>
+                    </div>
+                </form>
+            </div>
+            <div data-role="footer" data-position="fixed">
+                 <a href="#settingsPage" class="ui-btn ui-corner-all ui-shadow ui-icon-gear ui-btn-icon-left ">Settings</a>
+             </div>
+            <br>
+        </div>
+        <div data-role="page" id="historyPage">
+            <div data-role="header" class="header" data-position="fixed">
+                <h1>History</h1>
+                <a href="#homePage" data-icon="home" id="homeButton">Home</a>
+            </div>
+            <div data-role="main" class="main">
+                <br>
+                <br>
+                <button class="ui-btn ui-btn-inline smallButton" id="deleteHistory" data-mini="true">Delete All History</button>
+                <br>
+                <button class="ui-btn ui-btn-inline smallButton" id="exportCSV" data-mini="true">Email History</button>
+                <table id ="puffTable" class="pure-table pure-table-bordered center">
+                    <thead>
+                        <th>Date and Time</th>
+                        <th>Puffs Taken</th>
+                        <th>Medicine</th>
+                        <th>Comments</th>
+                        <th></th>
+                    </thead>
+                    <tbody id="tableBody"></tbody>
+                </div>
+                <div id="flot">
+                </div>
+                </table>
+            </div>
+        </div>
+         <div data-role="page" id="settingsPage">
+            <div data-role="header" class="header">
+                <h1>Settings</h1>
+                <a href="#homePage" data-icon="arrow-l" id="settingsButton">Back</a>
+            </div>
+            <div data-role="main" class="main">
+            </div>
+        </div>
+    </body>
+</html>

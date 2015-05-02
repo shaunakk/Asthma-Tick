@@ -1,0 +1,98 @@
+$(document).ready(function() {
+    makePuffArray()
+});
+
+function makePuffArray() {
+    if (localStorage.history) {
+        if (window.puffArray) {
+            window.puffArray = JSON.parse(localStorage.history)
+        } else {
+            puffArray = JSON.parse(localStorage.history)
+        }
+    } else {
+        puffArray = []
+    }
+    sort()
+    //parsePlugin()
+}
+
+function storeHistoryInLocalStorage() {
+    var numberPuffs = $("#select-native-2").val()
+    var medicine = $("#select-native-1").val()
+    var notes = $("#notes").val()
+    var d = new Date()
+    if (typeof(Storage) != undefined) {
+        window.puffArray.push(new Puff(numberPuffs, formatDate(), medicine, mils().toString(), notes, d.getTime().toString()))
+        localStorage.history = JSON.stringify(window.puffArray)
+        if (window.devicePlatform == "Android") {
+            var media = new Media("/android_asset/www/audio/inhalerSound.mp3")
+            media.play()
+        } else if (window.devicePlatform == "iOS") {
+            var media = new Media('audio/inhalerSound.wav')
+            media.play()
+        }
+
+    } else {
+        alert("ERROR:Your browser does not support LocalStorage")
+    }
+}
+var Puff = function(numberPuffs, dateTime, medicine, mils, notes, when) {
+    this.numberPuffs = numberPuffs
+    this.dateTime = dateTime
+    this.medicine = medicine
+    this.mils = mils
+    this.notes = notes
+    this.when = when
+}
+
+function mils() {
+    var d = new Date()
+    var dateTime = $("#date").val() + $("#time").val()
+    dateTime = new Date(moment(dateTime, ["MM-DD-YYYY hh:mm:ss"]))
+    var dateTimeMils = d.getTime(dateTime)
+    return dateTimeMils
+}
+
+function formatDate() {
+    var dateTime = $("#date").val() + " at " + $("#time").val()
+    return dateTime
+}
+
+function sort() {
+    window.puffArray.sort(
+        function(obj1, obj2) {
+            return parseInt(obj1.mils) - parseInt(obj2.mils)
+        }
+    )
+}
+
+function initialUpload() {
+    Parse.initialize("ashZHHCyg2eLkkPdnz9iH0Uf5uUl4Vw2IrAT8uBm", "ehtyn0uEjRXQOGW7pWqsMXOTG7CqfeQui3C7gAr2")
+    var ServerPuffObject = Parse.Object.extend("ServerPuffObject");
+    $.each(
+        window.puffArray,
+        function(i, item) {
+            var serverPuffObject = new ServerPuffObject();
+            serverPuffObject.set("numberPuffs", item.numberPuffs)
+            serverPuffObject.set("dateTime", item.dateTime)
+            serverPuffObject.set("medicine", item.medicine)
+            serverPuffObject.set("mils", item.mils)
+            serverPuffObject.set("notes", item.notes)
+            serverPuffObject.set("when", item.when)
+            serverPuffObject.save(null, {
+                success: function(serverPuffObject) {
+                    // Execute any logic that should take place after the object is saved.
+                    alert('New object created with objectId: ' + serverPuffObject.id);
+                },
+                error: function(serverPuffObject, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and message.
+                    alert('Failed to create new object, with error code: ' + error.message);
+                }
+            });
+        }
+    )
+
+
+
+}

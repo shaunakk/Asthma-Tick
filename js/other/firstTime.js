@@ -8,6 +8,7 @@ function firstTime() {
             $("#select-native-1").val(localStorage.typeOfMedicine).trigger("change");
             $("#select-native-2").val(localStorage.puffsAtTime).trigger("change");
             initialUpload()
+            login()
             return
         } else {
             localStorage.puffsAtTime = "1"
@@ -15,6 +16,7 @@ function firstTime() {
             $("#select-native-1").val(localStorage.typeOfMedicine).trigger("change");
             $("#select-native-2").val(localStorage.puffsAtTime).trigger("change");
             tour()
+            login()
         }
     }
 }

@@ -142,8 +142,8 @@
                 <a href="#homePage" data-icon="arrow-l" id="settingsButton">Back</a>
             </div>
             <div data-role="main" class="main">
-                <p>You are currently not logged in. Logging in syncs your history with other devices that you are logged in on.</p>
-                 <a href="#login" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn ui-corner-all ui-shadow ui-btn-inline">Log In</a>
+                <p id="loginP">You are currently not logged in. Logging in syncs your history with other devices that you are logged in on.</p>
+                 <a href="#login" data-rel="popup" data-position-to="window" data-transition="fade" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" id="loginButtonPopup">Log In</a>
             </div>
              <div data-role="popup" id="login">
                 <div data-role="header">
@@ -151,8 +151,10 @@
                 </div>
 
                 <div data-role="main" class="ui-content">
-                    <textarea cols="10" rows="1" id="username">Username</textarea>
-                    <textarea cols="10" rows="1" id="password">Password</textarea>
+                    <p>Username:</p>
+                    <input cols="10" rows="1" id="username"></input>
+                    <p>Password:</p>
+                    <input type="password" cols="10" rows="1" id="password"></input>
                     <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-icon-check ui-btn-icon-right" data-rel="back" id="createAccount">Create Account</a>
                     <a href="#" class="ui-btn ui-corner-all ui-btn-inline ui-icon-check ui-btn-icon-right" data-rel="back" id="loginButton">Login</a>
 

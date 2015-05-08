@@ -16,6 +16,8 @@ function createAccount() {
             alert("Error: " + error.code + " " + error.message);
         }
     });
+    initialUpload()
+    logoutText()
 }
 
 function loginButton() {
@@ -24,12 +26,29 @@ function loginButton() {
     alert(username)
     var password = $("#password").val()
     alert(password)
-    Parse.User.logIn("myname", "mypass", {
+    Parse.User.logIn(username, password, {
         success: function(user) {
-            // Do stuff after successful login.
+            alert("logged in")
         },
         error: function(user, error) {
             // The login failed. Check error to see why.
+            alert("Error: " + error.code + " " + error.message);
         }
     });
+    Parse.User.become(Parse.User.current()._sessionToken).then(function(user) {
+        // The current user is now set to user.
+    }, function(error) {
+        // The token could not be validated.
+    });
+    logoutText()
+}
+
+function loginText() {
+    $("#loginP").html("You are currently not logged in. Logging in syncs your history with other devices that you are logged in on.")
+    $("#loginButton, #loginButtonPopup").html("Log In")
+}
+
+function logoutText() {
+    $("#loginP").html(" You are currently logged in as " + "")
+    $("#loginButton, #loginButtonPopup").html("Log Out")
 }

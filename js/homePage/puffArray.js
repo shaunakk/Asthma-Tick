@@ -67,7 +67,6 @@ function sort() {
 }
 
 function initialUpload() {
-    /*Parse.initialize("ashZHHCyg2eLkkPdnz9iH0Uf5uUl4Vw2IrAT8uBm", "ehtyn0uEjRXQOGW7pWqsMXOTG7CqfeQui3C7gAr2")
     var ServerPuffObject = Parse.Object.extend("ServerPuffObject");
     $.each(
         window.puffArray,
@@ -91,12 +90,12 @@ function initialUpload() {
                 }
             });
         }
-    )*/
+    )
 
 
 
 }
 function login()
 {
-    
+
 }

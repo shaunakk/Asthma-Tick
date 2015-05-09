@@ -24,6 +24,10 @@ function storeHistoryInLocalStorage() {
     if (typeof(Storage) != undefined) {
         window.puffArray.push(new Puff(numberPuffs, formatDate(), medicine, mils().toString(), notes, d.getTime().toString()))
         localStorage.history = JSON.stringify(window.puffArray)
+        if(isOnline()==true)
+        {
+            var ServerPuffObject = Parse.Object.extend("ServerPuffObject");
+        }
         if (window.devicePlatform == "Android") {
             var media = new Media("/android_asset/www/audio/inhalerSound.mp3")
             media.play()
@@ -78,6 +82,7 @@ function initialUpload() {
             serverPuffObject.set("mils", item.mils)
             serverPuffObject.set("notes", item.notes)
             serverPuffObject.set("when", item.when)
+            serverPuffObject.set("user",Parse.User.current())
             serverPuffObject.save(null, {
                 success: function(serverPuffObject) {
                     // Execute any logic that should take place after the object is saved.

@@ -60,8 +60,30 @@ $(document).ready(
         )
         $("#loginButton").click(
             function() {
-                loginButton()
+                if ($("#loginButton").html() == "Log Out") {
+
+                } else {
+                    loginButton()
+
+
+                    $("#username, #password").val("")
+                }
             }
         )
+        $("#loginButtonPopup").click(
+            function() {
+                Parse.User.become(Parse.Session.sessionToken).then(function(user) {
+                    // The current user is now set to user.
+                }, function(error) {
+                    // The token could not be validated.
+                });
+                if ($("#loginButton").html() == "Log Out") {
+                    Parse.User.logOut()
+                    loginText()
+                    $("#login").hide()
+                } else {
+                    $("#login").show()
+                }
+            });
     }
 )

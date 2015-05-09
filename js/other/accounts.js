@@ -9,7 +9,7 @@ function createAccount() {
     user.set("password", password);
     user.signUp(null, {
         success: function(user) {
-
+            alert("account created")
         },
         error: function(user, error) {
             // Show the error message somewhere and let the user try again.
@@ -18,10 +18,24 @@ function createAccount() {
     });
     initialUpload()
     logoutText()
+    Parse.User.logIn(username, password, {
+        success: function(user) {
+            alert("logged in")
+        },
+        error: function(user, error) {
+            // The login failed. Check error to see why.
+            alert("Error: " + error.code + " " + error.message);
+        }
+    });
+    Parse.User.become(Parse.Session.sessionToken).then(function(user) {
+        // The current user is now set to user.
+    }, function(error) {
+        // The token could not be validated.
+    });
+
 }
 
 function loginButton() {
-    alert("login")
     var username = $("#username").val()
     alert(username)
     var password = $("#password").val()
@@ -35,7 +49,13 @@ function loginButton() {
             alert("Error: " + error.code + " " + error.message);
         }
     });
-    Parse.User.become(Parse.User.current()._sessionToken).then(function(user) {
+    if (Parse.User.current()) {
+        alert("current user exist")
+        alert(Parse.User.current().username)
+    } else {
+        alert("current user does not exist")
+    }
+    Parse.User.become(Parse.Session.sessionToken).then(function(user) {
         // The current user is now set to user.
     }, function(error) {
         // The token could not be validated.
@@ -49,6 +69,6 @@ function loginText() {
 }
 
 function logoutText() {
-    $("#loginP").html(" You are currently logged in as " + "")
+    $("#loginP").html(" You are currently logged in as " + Parse.User.current().get("username"))
     $("#loginButton, #loginButtonPopup").html("Log Out")
 }

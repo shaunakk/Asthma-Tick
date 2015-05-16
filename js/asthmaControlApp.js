@@ -2,6 +2,17 @@ $(document).ready(
     function() {
         Parse.initialize("ashZHHCyg2eLkkPdnz9iH0Uf5uUl4Vw2IrAT8uBm", "ehtyn0uEjRXQOGW7pWqsMXOTG7CqfeQui3C7gAr2")
         firstTime()
+        if (Parse.User.currentUser != null) {
+            Parse.User.logIn(Parse.User.currentUser.get("username"), localStorage.password, {
+                success: function(user) {
+                    logoutText()
+                },
+                error: function(user, error) {
+                    // The login failed. Check error to see why.
+                }
+            });
+
+        }
         FastClick.attach(document.body);
         $("#tourAgain").click(
             function() {
@@ -80,10 +91,17 @@ $(document).ready(
                 if ($("#loginButton").html() == "Log Out") {
                     Parse.User.logOut()
                     loginText()
+                    localStorage.removeItem('password')
                     $("#login").hide()
                 } else {
                     $("#login").show()
                 }
-            });
+            }
+        )
+        $("#refreshButton").click(
+            function() {
+                refreshButton()
+            }
+        )
     }
 )

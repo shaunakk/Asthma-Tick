@@ -1,30 +1,24 @@
 function createAccount() {
-    alert("createAccount")
     var username = $("#username").val()
-    alert(username)
     var password = $("#password").val()
-    alert(password)
+    localStorage.password = password
     var user = new Parse.User();
     user.set("username", username);
     user.set("password", password);
     user.signUp(null, {
         success: function(user) {
-            alert("account created")
         },
         error: function(user, error) {
             // Show the error message somewhere and let the user try again.
-            alert("Error: " + error.code + " " + error.message);
         }
     });
     initialUpload()
     logoutText()
     Parse.User.logIn(username, password, {
         success: function(user) {
-            alert("logged in")
         },
         error: function(user, error) {
             // The login failed. Check error to see why.
-            alert("Error: " + error.code + " " + error.message);
         }
     });
     Parse.User.become(Parse.Session.sessionToken).then(function(user) {
@@ -37,23 +31,17 @@ function createAccount() {
 
 function loginButton() {
     var username = $("#username").val()
-    alert(username)
     var password = $("#password").val()
-    alert(password)
+    localStorage.password = password
     Parse.User.logIn(username, password, {
         success: function(user) {
-            alert("logged in")
         },
         error: function(user, error) {
             // The login failed. Check error to see why.
-            alert("Error: " + error.code + " " + error.message);
         }
     });
     if (Parse.User.current()) {
-        alert("current user exist")
-        alert(Parse.User.current().username)
     } else {
-        alert("current user does not exist")
     }
     Parse.User.become(Parse.Session.sessionToken).then(function(user) {
         // The current user is now set to user.
@@ -61,6 +49,23 @@ function loginButton() {
         // The token could not be validated.
     });
     logoutText()
+}
+
+function refreshButton() {
+    if (Parse.User.current() == null) {
+        alert("You are not logged in!")
+    } else {
+        var ServerPuffObject = Parse.Object.extend("ServerPuffObject");
+        var query = new Parse.Query(ServerPuffObject);
+        query.equalTo("user", Parse.User.current());
+        query.find({
+            success: function(userPuffs) {
+                localStorage.history = JSON.stringify(userPuffs)
+                window.puffArray = JSON.parse(localStorage.history);
+                makeTable()
+            }
+        });
+    }
 }
 
 function loginText() {

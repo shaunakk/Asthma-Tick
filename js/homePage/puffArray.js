@@ -24,10 +24,40 @@ function storeHistoryInLocalStorage() {
     if (typeof(Storage) != undefined) {
         window.puffArray.push(new Puff(numberPuffs, formatDate(), medicine, mils().toString(), notes, d.getTime().toString()))
         localStorage.history = JSON.stringify(window.puffArray)
-        if(isOnline()==true)
-        {
+        if (window.navigator.onLine || JSON.parse(Parse.User.current())!="null") {
             var ServerPuffObject = Parse.Object.extend("ServerPuffObject");
+            var serverPuffObject = new ServerPuffObject();
+            serverPuffObject.set("numberPuffs", numberPuffs)
+            serverPuffObject.set("dateTime", formatDate())
+            serverPuffObject.set("medicine", medicine)
+            serverPuffObject.set("mils", mils().toString())
+            serverPuffObject.set("notes", notes)
+            serverPuffObject.set("when", d.getTime().toString(_))
+            serverPuffObject.set("user", Parse.User.current())
+            serverPuffObject.save(null, {
+                success: function(serverPuffObject) {
+                    // Execute any logic that should take place after the object is saved.
+                },
+                error: function(serverPuffObject, error) {
+                    // Execute any logic that should take place if the save fails.
+                    // error is a Parse.Error with an error code and message.
+                }
+            });
+        } else {
+            if (localStorage.unsyncedDataStorage) {
+                var unsyncedData = JSON.parse(localStorage.unsyncedDataStorage)
+                unsyncedData.push(new Puff(numberPuffs, formatDate(), medicine, mils().toString(), notes, d.getTime().toString()))
+                localStorage.unsyncedDataStorage = JSON.stringify(unsyncedData)
+            }
+            else
+            {
+                var unsyncedData = []
+                unsyncedData.push(new Puff(numberPuffs, formatDate(), medicine, mils().toString(), notes, d.getTime().toString()))
+                localStorage.unsyncedDataStorage=JSON.stringify(unsyncedData)
+            }
         }
+
+
         if (window.devicePlatform == "Android") {
             var media = new Media("/android_asset/www/audio/inhalerSound.mp3")
             media.play()
@@ -82,16 +112,14 @@ function initialUpload() {
             serverPuffObject.set("mils", item.mils)
             serverPuffObject.set("notes", item.notes)
             serverPuffObject.set("when", item.when)
-            serverPuffObject.set("user",Parse.User.current())
+            serverPuffObject.set("user", Parse.User.current())
             serverPuffObject.save(null, {
                 success: function(serverPuffObject) {
                     // Execute any logic that should take place after the object is saved.
-                    alert('New object created with objectId: ' + serverPuffObject.id);
                 },
                 error: function(serverPuffObject, error) {
                     // Execute any logic that should take place if the save fails.
                     // error is a Parse.Error with an error code and message.
-                    alert('Failed to create new object, with error code: ' + error.message);
                 }
             });
         }
@@ -100,7 +128,7 @@ function initialUpload() {
 
 
 }
-function login()
-{
+
+function login() {
 
 }

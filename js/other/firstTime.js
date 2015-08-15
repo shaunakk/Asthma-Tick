@@ -11,7 +11,7 @@ function firstTime() {
             if (JSON.stringify(Parse.User.current()) != "null") {
                 Parse.User.logIn(Parse.User.current().get("username"), localStorage.password, {
                     success: function(user) {
-                     
+
                         logoutText()
                     },
                     error: function(user, error) {
@@ -19,14 +19,13 @@ function firstTime() {
                     }
                 });
 
+            } else {
+                localStorage.puffsAtTime = "1"
+                localStorage.typeOfMedicine = "Advair"
+                $("#select-native-1").val(localStorage.typeOfMedicine).trigger("change");
+                $("#select-native-2").val(localStorage.puffsAtTime).trigger("change");
+                tour()
             }
-            return
-        } else {
-            localStorage.puffsAtTime = "1"
-            localStorage.typeOfMedicine = "Advair"
-            $("#select-native-1").val(localStorage.typeOfMedicine).trigger("change");
-            $("#select-native-2").val(localStorage.puffsAtTime).trigger("change");
-            tour()
         }
     }
 }
